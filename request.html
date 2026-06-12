@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request a Custom Fix | TIE Tech</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">TIE<span> Tech</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="request.html" class="active">Request A Fix</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="form-card">
+            <h2 style="margin-bottom: 10px; color: var(--text-white);">Submit Your Bug Details</h2>
+            <p style="color: var(--text-gray); margin-bottom: 25px;">Type out exactly what went wrong. Once received via email, we'll write a clean tutorial guide step-by-step and post it live to the platform.</p>
+            
+            <form action="https://formspree.io/f/xwvjrzgq" method="POST">
+                <div class="form-group">
+                    <label for="device">Platform / Device Type</label>
+                    <select name="device" id="device" class="form-control" required>
+                        <option value="Windows">Windows OS</option>
+                        <option value="Android">Android Device</option>
+                        <option value="iPhone">iPhone / iOS</option>
+                        <option value="Mac">macOS Device</option>
+                        <option value="Browser">Web Browser (Chrome/Safari/etc.)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="issue">Describe the Problem Types & Details</label>
+                    <textarea name="issue" id="issue" rows="6" class="form-control" placeholder="Example: My audio stopped working after update, it says no output device found..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%;">Send Request to TIE Tech</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 TIE Tech. Verified Download-Free Troubleshooting Hub.</p>
+    </footer>
+
+</body>
+</html>
