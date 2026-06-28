@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N5N7JCWKTF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-N5N7JCWKTF');
+</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calorie Deficit Calculator | TIEtools-hub</title>
+  <meta name="description" content="Free calorie deficit calculator. Find out exactly how many calories to eat daily to lose weight. Calculates TDEE, BMR, and your ideal calorie target." />
+  <meta name="keywords" content="calorie deficit calculator, how many calories to lose weight, TDEE calculator, BMR calculator, weight loss calculator, free calorie calculator" />
+  <meta name="author" content="TIEtools-hub" />
+
+  <meta property="og:title" content="Calorie Deficit Calculator | TIEtools-hub" />
+  <meta property="og:description" content="Find out exactly how many calories to eat to lose weight at your target pace. Free, instant, no signup." />
+  <meta property="og:type" content="website" />
+
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+    .activity-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .activity-option input[type="radio"] {
+      display: none;
+    }
+
+    .activity-option label {
+      display: flex;
+      flex-direction: column;
+      padding: 12px 14px;
+      background: var(--bg-dark);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .activity-option label .act-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-light);
+      margin-bottom: 2px;
+    }
+
+    .activity-option label .act-desc {
+      font-size: 0.75rem;
+      color: var(--text-gray);
+    }
+
+    .activity-option input[type="radio"]:checked + label {
+      border-color: var(--primary);
+      background: rgba(26, 115, 232, 0.12);
+    }
+
+    .activity-option input[type="radio"]:checked + label .act-title {
+      color: var(--primary-light);
+    }
+
+    .goal-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .goal-option {
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .goal-option input[type="radio"] {
+      display: none;
+    }
+
+    .goal-option label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px;
+      background: var(--bg-dark);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .goal-option label .goal-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-light);
+    }
+
+    .goal-option label .goal-sub {
+      font-size: 0.75rem;
+      color: var(--text-gray);
+      margin-top: 2px;
+    }
+
+    .goal-option input[type="radio"]:checked + label {
+      border-color: var(--primary);
+      background: rgba(26, 115, 232, 0.12);
+    }
+
+    .goal-option input[type="radio"]:checked + label .goal-title {
+      color: var(--primary-light);
+    }
+
+    .weight-plan {
+      margin-top: 20px;
+    }
+
+    .weight-plan-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-light);
+      margin-bottom: 16px;
+    }
+
+    .plan-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+
+    .plan-row:last-child {
+      border-bottom: none;
+    }
+
+    .plan-row .plan-label {
+      color: var(--text-gray);
+    }
+
+    .plan-row .plan-value {
+      font-weight: 700;
+      color: var(--text-white);
+    }
+
+    .plan-row.highlighted .plan-value {
+      color: var(--primary-light);
+      font-size: 1rem;
+    }
+
+    .reset-btn {
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      color: var(--text-gray);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 12px;
+    }
+
+    .reset-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary-light);
+    }
+
+    @media (max-width: 480px) {
+      .activity-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .goal-bar {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">TIE<span>tools</span>-hub</div>
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../index.html#tools">Tools</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="tool-page-wrapper">
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span>›</span>
+      <a href="../index.html#tools">Tools</a>
+      <span>›</span>
+      Calorie Deficit Calculator
+    </div>
+
+    <!-- TOOL HEADER -->
+    <div class="tool-header">
+      <h1>🔥 Calorie Deficit Calculator</h1>
+      <p>Enter your details below to find out exactly how many calories you should eat daily to reach your weight loss goal — based on your body, activity level, and target pace.</p>
+    </div>
+
+    <!-- CALCULATOR CARD -->
+    <div class="calc-card">
+
+      <!-- UNIT TOGGLE -->
+      <div class="form-group">
+        <label>Unit System</label>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="unit" id="metric" value="metric" checked />
+            <label for="metric">Metric (kg / cm)</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="unit" id="imperial" value="imperial" />
+            <label for="imperial">Imperial (lbs / ft)</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGE -->
+      <div class="form-group">
+        <label for="age">Age (years)</label>
+        <input type="number" id="age" placeholder="e.g. 22" min="10" max="100" />
+      </div>
+
+      <!-- GENDER -->
+      <div class="form-group">
+        <label>Gender</label>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="gender" id="male" value="male" checked />
+            <label for="male">Male</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="gender" id="female" value="female" />
+            <label for="female">Female</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- HEIGHT -->
+      <div class="form-group" id="heightMetricGroup">
+        <label for="heightCm">Height (cm)</label>
+        <input type="number" id="heightCm" placeholder="e.g. 175" min="100" max="250" />
+      </div>
+
+      <div class="form-group" id="heightImperialGroup" style="display:none;">
+        <label>Height</label>
+        <div style="display:flex; gap:12px;">
+          <input type="number" id="heightFt" placeholder="Feet e.g. 5" min="1" max="8" style="flex:1;" />
+          <input type="number" id="heightIn" placeholder="Inches e.g. 9" min="0" max="11" style="flex:1;" />
+        </div>
+      </div>
+
+      <!-- WEIGHT -->
+      <div class="form-group" id="weightMetricGroup">
+        <label for="weightKg">Current Weight (kg)</label>
+        <input type="number" id="weightKg" placeholder="e.g. 75" min="20" max="300" />
+      </div>
+
+      <div class="form-group" id="weightImperialGroup" style="display:none;">
+        <label for="weightLbs">Current Weight (lbs)</label>
+        <input type="number" id="weightLbs" placeholder="e.g. 165" min="44" max="660" />
+      </div>
+
+      <!-- ACTIVITY LEVEL -->
+      <div class="form-group">
+        <label>Activity Level</label>
+        <div class="activity-grid">
+          <div class="activity-option">
+            <input type="radio" name="activity" id="sedentary" value="1.2" checked />
+            <label for="sedentary">
+              <span class="act-title">😴 Sedentary</span>
+              <span class="act-desc">Little or no exercise</span>
+            </label>
+          </div>
+          <div class="activity-option">
+            <input type="radio" name="activity" id="light" value="1.375" />
+            <label for="light">
+              <span class="act-title">🚶 Lightly Active</span>
+              <span class="act-desc">Exercise 1–3 days/week</span>
+            </label>
+          </div>
+          <div class="activity-option">
+            <input type="radio" name="activity" id="moderate" value="1.55" />
+            <label for="moderate">
+              <span class="act-title">🏃 Moderately Active</span>
+              <span class="act-desc">Exercise 3–5 days/week</span>
+            </label>
+          </div>
+          <div class="activity-option">
+            <input type="radio" name="activity" id="very" value="1.725" />
+            <label for="very">
+              <span class="act-title">💪 Very Active</span>
+              <span class="act-desc">Hard exercise 6–7 days/week</span>
+            </label>
+          </div>
+          <div class="activity-option">
+            <input type="radio" name="activity" id="extra" value="1.9" />
+            <label for="extra">
+              <span class="act-title">🏋️ Extra Active</span>
+              <span class="act-desc">Very hard exercise & physical job</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- GOAL -->
+      <div class="form-group">
+        <label>Weight Loss Goal</label>
+        <div class="goal-bar">
+          <div class="goal-option">
+            <input type="radio" name="goal" id="mild" value="250" checked />
+            <label for="mild">
+              <span class="goal-title">Mild</span>
+              <span class="goal-sub">0.25 kg/week</span>
+            </label>
+          </div>
+          <div class="goal-option">
+            <input type="radio" name="goal" id="moderate_loss" value="500" />
+            <label for="moderate_loss">
+              <span class="goal-title">Moderate</span>
+              <span class="goal-sub">0.5 kg/week</span>
+            </label>
+          </div>
+          <div class="goal-option">
+            <input type="radio" name="goal" id="aggressive" value="750" />
+            <label for="aggressive">
+              <span class="goal-title">Aggressive</span>
+              <span class="goal-sub">0.75 kg/week</span>
+            </label>
+          </div>
+          <div class="goal-option">
+            <input type="radio" name="goal" id="extreme" value="1000" />
+            <label for="extreme">
+              <span class="goal-title">Extreme</span>
+              <span class="goal-sub">1 kg/week</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- CALCULATE BUTTON -->
+      <button class="calc-btn" onclick="calculate()">Calculate My Calorie Deficit 🔥</button>
+      <button class="reset-btn" onclick="resetForm()">Reset</button>
+
+    </div>
+
+    <!-- RESULTS CARD -->
+    <div class="results-card" id="resultsCard">
+      <div class="results-title">📊 Your Results</div>
+
+      <!-- BIG NUMBER -->
+      <div class="result-highlight">
+        <span class="big-number" id="deficitCalories">—</span>
+        <div class="big-label">Calories to eat per day to lose weight</div>
+      </div>
+
+      <!-- STAT GRID -->
+      <div class="result-grid">
+        <div class="result-item">
+          <span class="result-value" id="bmrResult">—</span>
+          <span class="result-label">BMR (Base Metabolism)</span>
+        </div>
+        <div class="result-item">
+          <span class="result-value" id="tdeeResult">—</span>
+          <span class="result-label">TDEE (Maintenance)</span>
+        </div>
+        <div class="result-item">
+          <span class="result-value" id="deficitAmount">—</span>
+          <span class="result-label">Daily Calorie Deficit</span>
+        </div>
+        <div class="result-item">
+          <span class="result-value" id="lossPerWeek">—</span>
+          <span class="result-label">Est. Loss Per Week</span>
+        </div>
+      </div>
+
+      <!-- WEEKLY PLAN -->
+      <div class="weight-plan">
+        <div class="weight-plan-title">📅 Projected Weight Loss Plan</div>
+        <div class="plan-row highlighted">
+          <span class="plan-label">In 1 month</span>
+          <span class="plan-value" id="loss1month">—</span>
+        </div>
+        <div class="plan-row">
+          <span class="plan-label">In 3 months</span>
+          <span class="plan-value" id="loss3months">—</span>
+        </div>
+        <div class="plan-row">
+          <span class="plan-label">In 6 months</span>
+          <span class="plan-value" id="loss6months">—</span>
+        </div>
+      </div>
+
+      <!-- TIP -->
+      <div class="result-tip" id="resultTip"></div>
+    </div>
+
+    <!-- INFO SECTION -->
+    <div class="info-section">
+      <h2>What is a Calorie Deficit?</h2>
+      <p>A calorie deficit happens when you eat fewer calories than your body burns in a day. Your body then turns to stored fat for energy — which is how you lose weight.</p>
+      <p>For example, if your body burns 2,500 calories per day and you eat 2,000, you have a 500-calorie deficit. Over 7 days that's 3,500 calories — roughly 0.5 kg of fat lost.</p>
+
+      <h3>What is BMR?</h3>
+      <p>BMR (Basal Metabolic Rate) is the number of calories your body needs just to stay alive — breathing, heartbeat, organ function — if you did absolutely nothing all day.</p>
+
+      <h3>What is TDEE?</h3>
+      <p>TDEE (Total Daily Energy Expenditure) is your BMR multiplied by your activity level. This is your true maintenance calorie number — eat this and your weight stays the same.</p>
+
+      <h3>How much deficit is safe?</h3>
+      <p>A deficit of 250–500 calories per day is generally considered safe and sustainable. Deficits above 1,000 calories per day can lead to muscle loss, fatigue, and nutritional deficiencies.</p>
+
+      <h3>How is this calculated?</h3>
+      <p>This calculator uses the <strong style="color: var(--text-white);">Mifflin-St Jeor equation</strong> — the most accurate BMR formula available for most people, recommended by nutrition scientists worldwide.</p>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 <span>TIEtools-hub</span> · Free tools for everyone · No signup required</p>
+  </footer>
+
+  <script>
+    // ===== UNIT TOGGLE =====
+    const unitRadios = document.querySelectorAll('input[name="unit"]');
+    unitRadios.forEach(radio => {
+      radio.addEventListener('change', function () {
+        const isMetric = this.value === 'metric';
+        document.getElementById('heightMetricGroup').style.display = isMetric ? 'block' : 'none';
+        document.getElementById('heightImperialGroup').style.display = isMetric ? 'none' : 'block';
+        document.getElementById('weightMetricGroup').style.display = isMetric ? 'block' : 'none';
+        document.getElementById('weightImperialGroup').style.display = isMetric ? 'none' : 'block';
+        document.querySelector('label[for="weightKg"]') && resetForm();
+      });
+    });
+
+    // ===== CALCULATE =====
+    function calculate() {
+      const unit = document.querySelector('input[name="unit"]:checked').value;
+      const age = parseFloat(document.getElementById('age').value);
+      const gender = document.querySelector('input[name="gender"]:checked').value;
+      const activity = parseFloat(document.querySelector('input[name="activity"]:checked').value);
+      const goal = parseFloat(document.querySelector('input[name="goal"]:checked').value);
+
+      let weightKg, heightCm;
+
+      if (unit === 'metric') {
+        weightKg = parseFloat(document.getElementById('weightKg').value);
+        heightCm = parseFloat(document.getElementById('heightCm').value);
+      } else {
+        const lbs = parseFloat(document.getElementById('weightLbs').value);
+        const ft = parseFloat(document.getElementById('heightFt').value) || 0;
+        const inches = parseFloat(document.getElementById('heightIn').value) || 0;
+        weightKg = lbs * 0.453592;
+        heightCm = (ft * 30.48) + (inches * 2.54);
+      }
+
+      // Validation
+      if (!age || !weightKg || !heightCm || isNaN(age) || isNaN(weightKg) || isNaN(heightCm)) {
+        alert('Please fill in all fields correctly.');
+        return;
+      }
+
+      if (age < 10 || age > 100) { alert('Please enter a valid age between 10 and 100.'); return; }
+      if (weightKg < 20 || weightKg > 300) { alert('Please enter a valid weight.'); return; }
+      if (heightCm < 100 || heightCm > 250) { alert('Please enter a valid height.'); return; }
+
+      // Mifflin-St Jeor BMR
+      let bmr;
+      if (gender === 'male') {
+        bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) + 5;
+      } else {
+        bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) - 161;
+      }
+
+      const tdee = bmr * activity;
+      const deficitCalories = Math.max(tdee - goal, 1200); // never below 1200
+      const actualDeficit = tdee - deficitCalories;
+      const lossPerWeek = (actualDeficit * 7) / 7700; // kg per week
+
+      // Projections
+      const loss1m = lossPerWeek * 4.33;
+      const loss3m = lossPerWeek * 13;
+      const loss6m = lossPerWeek * 26;
+
+      // Display
+      document.getElementById('bmrResult').textContent = Math.round(bmr) + ' cal';
+      document.getElementById('tdeeResult').textContent = Math.round(tdee) + ' cal';
+      document.getElementById('deficitCalories').textContent = Math.round(deficitCalories) + ' cal/day';
+      document.getElementById('deficitAmount').textContent = Math.round(actualDeficit) + ' cal';
+      document.getElementById('lossPerWeek').textContent = lossPerWeek.toFixed(2) + ' kg';
+      document.getElementById('loss1month').textContent = loss1m.toFixed(1) + ' kg';
+      document.getElementById('loss3months').textContent = loss3m.toFixed(1) + ' kg';
+      document.getElementById('loss6months').textContent = loss6m.toFixed(1) + ' kg';
+
+      // Tip
+      let tip = '';
+      if (deficitCalories <= 1200) {
+        tip = '⚠️ Your calculated target is very low. We\'ve set a safe minimum of 1,200 cal/day. Consider choosing a milder goal or consulting a nutritionist.';
+      } else if (goal >= 750) {
+        tip = '💡 Aggressive deficits work faster but are harder to maintain. Make sure you\'re getting enough protein (at least 1.6g per kg of body weight) to preserve muscle.';
+      } else {
+        tip = '✅ Great choice! A moderate deficit is the most sustainable approach. Pair it with strength training and 7–8 hours of sleep for best results.';
+      }
+      document.getElementById('resultTip').textContent = tip;
+
+      // Show results
+      const resultsCard = document.getElementById('resultsCard');
+      resultsCard.classList.add('visible');
+      resultsCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ===== RESET =====
+    function resetForm() {
+      document.getElementById('age').value = '';
+      document.getElementById('heightCm').value = '';
+      document.getElementById('weightKg').value = '';
+      document.getElementById('heightFt').value = '';
+      document.getElementById('heightIn').value = '';
+      document.getElementById('weightLbs').value = '';
+      document.getElementById('resultsCard').classList.remove('visible');
+      document.querySelector('input[name="unit"][value="metric"]').checked = true;
+      document.querySelector('input[name="gender"][value="male"]').checked = true;
+      document.querySelector('input[name="activity"][value="1.2"]').checked = true;
+      document.querySelector('input[name="goal"][value="250"]').checked = true;
+      document.getElementById('heightMetricGroup').style.display = 'block';
+      document.getElementById('heightImperialGroup').style.display = 'none';
+      document.getElementById('weightMetricGroup').style.display = 'block';
+      document.getElementById('weightImperialGroup').style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>

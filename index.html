@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
+  <!-- Google tag (gtag.js) -->
+  <meta charset="UTF-8" />
+  <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-N5N7JCWKTF"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -10,59 +12,112 @@
 
   gtag('config', 'G-N5N7JCWKTF');
 </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TIE Tech | Fast, Safe, Download-Free Software Solutions</title>
-    <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TIEtools-hub | Free Online Tools & Calculators</title>
+  <meta name="description" content="TIEtools-hub offers free online calculators and tools for everyone. Health, finance, math, and more — fast, simple, no signup required." />
+  <meta name="keywords" content="free online tools, calculators, unit converters, calorie calculator, TIEtools-hub" />
+  <meta name="author" content="TIEtools-hub" />
+
+  <!-- Open Graph (for sharing on social media) -->
+  <meta property="og:title" content="TIEtools-hub | Free Online Tools & Calculators" />
+  <meta property="og:description" content="Fast, free, and simple online tools for everyone. No signup, no fluff." />
+  <meta property="og:type" content="website" />
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-    <header>
-        <div class="nav-container">
-            <div class="logo">TIE<span> Tech</span></div>
-            <nav>
-                <ul>
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="request.html">Request A Fix</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+  <!-- HEADER -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">TIE<span>tools</span>-hub</div>
+      <nav>
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="#tools">Tools</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-    <main class="container">
-        <div class="request-banner">
-            <h2>Can't Find a Solution to Your Tech Bug?</h2>
-            <p>Lay your exact issue details here, and we'll create a solution for it soon.</p>
-            <a href="request.html" class="btn-primary">Request a Fix Now</a>
-        </div>
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Smart Tools for <span>Everyone</span></h1>
+    <p>Free online calculators and tools — no signup, no fluff. Just results.</p>
+    <div class="search-container">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search for a tool... e.g. calorie, BMI, age"
+      />
+      <span class="search-icon">🔍</span>
+    </div>
+  </section>
 
-        <section style="margin-top: 40px;">
-            <h2 style="text-align: center; margin-bottom: 10px;">Select The Device Platform You Have An Issue With.</h2>
-            <p style="text-align: center; color: var(--text-gray); margin-bottom: 30px;">Choose a category below to explore specific troubleshooting problem types.</p>
-            
-            <div class="category-grid">
-                <a href="categories/windows.html" class="category-card">
-                    <h3>Windows OS</h3>
-                </a>
-                <a href="categories/mac.html" class="category-card">
-                    <h3>macOS</h3>
-                </a>
-                <a href="categories/android.html" class="category-card">
-                    <h3>Android</h3>
-                </a>
-                <a href="categories/iphone.html" class="category-card">
-                    <h3>iPhone / iOS</h3>
-                </a>
-                <a href="categories/browsers.html" class="category-card">
-                    <h3>Web Browsers</h3>
-                </a>
-            </div>
-        </section>
-    </main>
+  <!-- TOOLS SECTION -->
+  <section class="tools-section" id="tools">
+    <h2 class="section-title">All Tools</h2>
 
-    <footer>
-        <p>&copy; 2026 TIE Tech. Verified Download-Free Troubleshooting Hub.</p>
-    </footer>
+    <div class="tools-grid" id="toolsGrid">
+
+      <!-- TOOL CARD 1 -->
+      <a href="tools/calorie-deficit-calculator.html" class="tool-card">
+        <div class="tool-icon">🔥</div>
+        <h3>Calorie Deficit Calculator</h3>
+        <p>Find out exactly how many calories to eat daily to lose weight at your target pace.</p>
+        <span class="tool-tag">Health</span>
+      </a>
+
+      <!-- ADD MORE TOOL CARDS HERE LATER -->
+
+    </div>
+
+    <!-- No results message -->
+    <div class="no-results" id="noResults">
+      <p>😕 No tools found for "<span id="searchTerm"></span>"</p>
+      <p>Try searching something else like "calorie" or "BMI"</p>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 <span>TIEtools-hub</span> · Free tools for everyone · No signup required</p>
+  </footer>
+
+  <script>
+    // ===== SEARCH FUNCTIONALITY =====
+    const searchInput = document.getElementById('searchInput');
+    const toolsGrid = document.getElementById('toolsGrid');
+    const noResults = document.getElementById('noResults');
+    const searchTermSpan = document.getElementById('searchTerm');
+    const toolCards = document.querySelectorAll('.tool-card');
+
+    searchInput.addEventListener('input', function () {
+      const query = this.value.toLowerCase().trim();
+      let visibleCount = 0;
+
+      toolCards.forEach(card => {
+        const title = card.querySelector('h3').textContent.toLowerCase();
+        const desc = card.querySelector('p').textContent.toLowerCase();
+        const tag = card.querySelector('.tool-tag').textContent.toLowerCase();
+
+        if (title.includes(query) || desc.includes(query) || tag.includes(query)) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (visibleCount === 0 && query !== '') {
+        noResults.style.display = 'block';
+        searchTermSpan.textContent = this.value;
+      } else {
+        noResults.style.display = 'none';
+      }
+    });
+  </script>
 
 </body>
 </html>
