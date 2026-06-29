@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1051288456257067"
+     crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N5N7JCWKTF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N5N7JCWKTF');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Water Intake Calculator | TIEtools-hub</title>
+  <meta name="description" content="Free water intake calculator. Find out exactly how much water you should drink daily based on your weight, activity level, and climate. Instant, no signup." />
+  <meta name="keywords" content="water intake calculator, how much water should I drink, daily water intake, hydration calculator, water calculator" />
+  <meta name="author" content="TIEtools-hub" />
+
+  <meta property="og:title" content="Water Intake Calculator | TIEtools-hub" />
+  <meta property="og:description" content="Find out exactly how much water you should drink daily. Free, instant, no signup." />
+  <meta property="og:type" content="website" />
+
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+    .activity-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .activity-option input[type="radio"] {
+      display: none;
+    }
+
+    .activity-option label {
+      display: flex;
+      flex-direction: column;
+      padding: 12px 14px;
+      background: var(--bg-dark);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .activity-option label .act-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-light);
+      margin-bottom: 2px;
+    }
+
+    .activity-option label .act-desc {
+      font-size: 0.75rem;
+      color: var(--text-gray);
+    }
+
+    .activity-option input[type="radio"]:checked + label {
+      border-color: var(--primary);
+      background: rgba(26, 115, 232, 0.12);
+    }
+
+    .activity-option input[type="radio"]:checked + label .act-title {
+      color: var(--primary-light);
+    }
+
+    .climate-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .climate-option input[type="radio"] {
+      display: none;
+    }
+
+    .climate-option label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 14px 10px;
+      background: var(--bg-dark);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .climate-option label .climate-icon {
+      font-size: 1.5rem;
+      margin-bottom: 6px;
+    }
+
+    .climate-option label .climate-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-light);
+    }
+
+    .climate-option label .climate-desc {
+      font-size: 0.72rem;
+      color: var(--text-gray);
+      margin-top: 2px;
+    }
+
+    .climate-option input[type="radio"]:checked + label {
+      border-color: var(--primary);
+      background: rgba(26, 115, 232, 0.12);
+    }
+
+    .climate-option input[type="radio"]:checked + label .climate-title {
+      color: var(--primary-light);
+    }
+
+    .unit-toggle {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .unit-toggle input[type="radio"] {
+      display: none;
+    }
+
+    .unit-toggle label {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      background: var(--bg-dark);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-gray);
+      transition: all 0.2s;
+    }
+
+    .unit-toggle input[type="radio"]:checked + label {
+      border-color: var(--primary);
+      background: rgba(26, 115, 232, 0.15);
+      color: var(--primary-light);
+    }
+
+    .cups-breakdown {
+      background: var(--bg-dark);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-top: 16px;
+    }
+
+    .cups-breakdown-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-gray);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cups-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+
+    .cups-row:last-child {
+      border-bottom: none;
+    }
+
+    .cups-row .cups-label {
+      color: var(--text-gray);
+    }
+
+    .cups-row .cups-value {
+      font-weight: 700;
+      color: var(--text-white);
+    }
+
+    .reset-btn {
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      color: var(--text-gray);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 12px;
+    }
+
+    .reset-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary-light);
+    }
+
+    .water-visual {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 16px 0;
+      justify-content: center;
+    }
+
+    .water-glass {
+      font-size: 1.6rem;
+    }
+
+    @media (max-width: 480px) {
+      .activity-grid {
+        grid-template-columns: 1fr;
+      }
+      .climate-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">TIE<span>tools</span>-hub</div>
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../index.html#tools">Tools</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="tool-page-wrapper">
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span>›</span>
+      <a href="../index.html#tools">Tools</a>
+      <span>›</span>
+      Water Intake Calculator
+    </div>
+
+    <!-- TOOL HEADER -->
+    <div class="tool-header">
+      <h1>💧 Water Intake Calculator</h1>
+      <p>Find out exactly how much water you should drink every day — personalised to your weight, activity level, and the climate you live in.</p>
+    </div>
+
+    <!-- CALCULATOR CARD -->
+    <div class="calc-card">
+
+      <!-- UNIT TOGGLE -->
+      <div class="unit-toggle">
+        <input type="radio" name="unit" id="unitMetric" value="metric" checked />
+        <label for="unitMetric">⚖️ Metric (kg)</label>
+        <input type="radio" name="unit" id="unitImperial" value="imperial" />
+        <label for="unitImperial">🇺🇸 Imperial (lbs)</label>
+      </div>
+
+      <!-- WEIGHT METRIC -->
+      <div class="form-group" id="weightMetricGroup">
+        <label for="weightKg">Weight (kg)</label>
+        <input type="number" id="weightKg" placeholder="e.g. 70" min="20" max="300" />
+      </div>
+
+      <!-- WEIGHT IMPERIAL -->
+      <div class="form-group" id="weightImperialGroup" style="display:none;">
+        <label for="weightLbs">Weight (lbs)</label>
+        <input type="number" id="weightLbs" placeholder="e.g. 154" min="44" max="660" />
+      </div>
+
+      <!-- ACTIVITY LEVEL -->
+      <div class="form-group">
+        <label>Activity Level</label>
+        <div class="activity-grid">
+          <div class="activity-option">
+            <input type="radio" name="activity" id="actSedentary" value="1.0" checked />
+            <label for="actSedentary">
+              <span class="act-title">Sedentary</span>
+              <span class="act-desc">Little or no exercise</span>
+            </label>
+          </div>
+          <div class="activity-option">
+            <input type="radio" name="activity" id="actLight" value="1.12" />
+            <label for="actLight">
+              <span class="act-title">Lightly Active</span>
+              <span class="act-desc">Exercise 1–3 days/week</span>
+            </label>
+          </div>
+          <div class="activity-option">
+            <input type="radio" name="activity" id="actModerate" value="1.25" />
+            <label for="actModerate">
+              <span class="act-title">Moderately Active</span>
+              <span class="act-desc">Exercise 3–5 days/week</span>
+            </label>
+          </div>
+          <div class="activity-option">
+            <input type="radio" name="activity" id="actVery" value="1.45" />
+            <label for="actVery">
+              <span class="act-title">Very Active</span>
+              <span class="act-desc">Hard exercise 6–7 days/week</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- CLIMATE -->
+      <div class="form-group">
+        <label>Climate / Weather</label>
+        <div class="climate-grid">
+          <div class="climate-option">
+            <input type="radio" name="climate" id="climateCold" value="0" />
+            <label for="climateCold">
+              <span class="climate-icon">❄️</span>
+              <span class="climate-title">Cold</span>
+              <span class="climate-desc">Below 15°C / 59°F</span>
+            </label>
+          </div>
+          <div class="climate-option">
+            <input type="radio" name="climate" id="climateMild" value="0.3" checked />
+            <label for="climateMild">
+              <span class="climate-icon">🌤️</span>
+              <span class="climate-title">Mild</span>
+              <span class="climate-desc">15–25°C / 59–77°F</span>
+            </label>
+          </div>
+          <div class="climate-option">
+            <input type="radio" name="climate" id="climateHot" value="0.6" />
+            <label for="climateHot">
+              <span class="climate-icon">🔆</span>
+              <span class="climate-title">Hot</span>
+              <span class="climate-desc">Above 25°C / 77°F</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- CALCULATE BUTTON -->
+      <button class="calc-btn" onclick="calculate()">Calculate My Water Intake 💧</button>
+      <button class="reset-btn" onclick="resetForm()">Reset</button>
+
+    </div>
+
+    <!-- RESULTS CARD -->
+    <div class="results-card" id="resultsCard">
+      <div class="results-title">💧 Your Daily Water Intake</div>
+
+      <!-- BIG NUMBER -->
+      <div class="result-highlight">
+        <span class="big-number" id="totalLitres">—</span>
+        <div class="big-label">Litres of water per day</div>
+      </div>
+
+      <!-- WATER GLASSES VISUAL -->
+      <div class="water-visual" id="waterVisual"></div>
+
+      <!-- STAT GRID -->
+      <div class="result-grid">
+        <div class="result-item">
+          <span class="result-value" id="totalMl">—</span>
+          <span class="result-label">Millilitres (ml)</span>
+        </div>
+        <div class="result-item">
+          <span class="result-value" id="totalOz">—</span>
+          <span class="result-label">Fluid Ounces (fl oz)</span>
+        </div>
+        <div class="result-item">
+          <span class="result-value" id="totalCups">—</span>
+          <span class="result-label">Cups (250ml each)</span>
+        </div>
+        <div class="result-item">
+          <span class="result-value" id="totalGlasses">—</span>
+          <span class="result-label">Glasses (330ml each)</span>
+        </div>
+      </div>
+
+      <!-- BREAKDOWN -->
+      <div class="cups-breakdown">
+        <div class="cups-breakdown-title">📅 How to spread it through the day</div>
+        <div class="cups-row">
+          <span class="cups-label">☀️ Morning (wake up – 12pm)</span>
+          <span class="cups-value" id="morning">—</span>
+        </div>
+        <div class="cups-row">
+          <span class="cups-label">🌤️ Afternoon (12pm – 6pm)</span>
+          <span class="cups-value" id="afternoon">—</span>
+        </div>
+        <div class="cups-row">
+          <span class="cups-label">🌙 Evening (6pm – bedtime)</span>
+          <span class="cups-value" id="evening">—</span>
+        </div>
+      </div>
+
+      <!-- TIP -->
+      <div class="result-tip" id="resultTip" style="margin-top:16px;"></div>
+    </div>
+
+    <!-- INFO SECTION -->
+    <div class="info-section">
+      <h2>How Much Water Should You Drink?</h2>
+      <p>Most people have heard "drink 8 glasses a day" — but that's a one-size-fits-all guess. Your actual water needs depend on your body weight, how active you are, and the temperature where you live.</p>
+      <p>This calculator uses your personal details to give you a more accurate daily target.</p>
+
+      <h3>Why does weight matter?</h3>
+      <p>Larger bodies have more cells, more blood, and more metabolic activity — all of which require water to function. A general baseline is around 35ml of water per kilogram of body weight per day.</p>
+
+      <h3>Why does activity level matter?</h3>
+      <p>When you exercise, you sweat and lose water rapidly. Active people can lose an extra 500ml–1 litre per hour of exercise, which must be replaced to stay properly hydrated.</p>
+
+      <h3>Why does climate matter?</h3>
+      <p>Hot weather causes you to sweat more even when resting. People living in tropical or hot climates need significantly more water than those in cold regions just to stay at the same hydration level.</p>
+
+      <h3>Signs you're not drinking enough</h3>
+      <p>Dark yellow urine, headaches, fatigue, dry mouth, and difficulty concentrating are all early signs of dehydration. Aim for pale yellow urine as a simple daily check.</p>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 <span>TIEtools-hub</span> · Free tools for everyone · No signup required</p>
+  </footer>
+
+  <script>
+    // ===== UNIT TOGGLE =====
+    document.querySelectorAll('input[name="unit"]').forEach(radio => {
+      radio.addEventListener('change', function () {
+        const isMetric = this.value === 'metric';
+        document.getElementById('weightMetricGroup').style.display = isMetric ? 'block' : 'none';
+        document.getElementById('weightImperialGroup').style.display = isMetric ? 'none' : 'block';
+      });
+    });
+
+    // ===== CALCULATE =====
+    function calculate() {
+      const unit = document.querySelector('input[name="unit"]:checked').value;
+      const activity = parseFloat(document.querySelector('input[name="activity"]:checked').value);
+      const climateAdd = parseFloat(document.querySelector('input[name="climate"]:checked').value);
+
+      let weightKg;
+      if (unit === 'metric') {
+        weightKg = parseFloat(document.getElementById('weightKg').value);
+      } else {
+        const lbs = parseFloat(document.getElementById('weightLbs').value);
+        weightKg = lbs * 0.453592;
+      }
+
+      // Validation
+      if (!weightKg || isNaN(weightKg)) {
+        alert('Please enter your weight.');
+        return;
+      }
+      if (weightKg < 20 || weightKg > 300) {
+        alert('Please enter a valid weight.');
+        return;
+      }
+
+      // Base: 35ml per kg
+      const baseMl = weightKg * 35;
+
+      // Activity multiplier
+      const activityMl = baseMl * activity;
+
+      // Climate addition (in ml)
+      const climateMl = activityMl + (climateAdd * 1000);
+
+      const totalMl = Math.round(climateMl);
+      const totalLitres = (totalMl / 1000).toFixed(1);
+      const totalOz = Math.round(totalMl * 0.033814);
+      const totalCups = Math.round(totalMl / 250);
+      const totalGlasses = Math.round(totalMl / 330);
+
+      // Spread through day
+      const morningMl = Math.round(totalMl * 0.35);
+      const afternoonMl = Math.round(totalMl * 0.40);
+      const eveningMl = totalMl - morningMl - afternoonMl;
+
+      // Display
+      document.getElementById('totalLitres').textContent = totalLitres + ' L';
+      document.getElementById('totalMl').textContent = totalMl.toLocaleString() + ' ml';
+      document.getElementById('totalOz').textContent = totalOz + ' fl oz';
+      document.getElementById('totalCups').textContent = totalCups + ' cups';
+      document.getElementById('totalGlasses').textContent = totalGlasses + ' glasses';
+
+      document.getElementById('morning').textContent = (morningMl / 1000).toFixed(2) + ' L';
+      document.getElementById('afternoon').textContent = (afternoonMl / 1000).toFixed(2) + ' L';
+      document.getElementById('evening').textContent = (eveningMl / 1000).toFixed(2) + ' L';
+
+      // Water glass visual
+      const visual = document.getElementById('waterVisual');
+      visual.innerHTML = '';
+      const glassCount = Math.min(totalGlasses, 12);
+      for (let i = 0; i < glassCount; i++) {
+        const g = document.createElement('span');
+        g.className = 'water-glass';
+        g.textContent = '🥤';
+        visual.appendChild(g);
+      }
+      if (totalGlasses > 12) {
+        const more = document.createElement('span');
+        more.style.cssText = 'font-size:0.85rem;color:var(--text-gray);align-self:center;';
+        more.textContent = '+' + (totalGlasses - 12) + ' more';
+        visual.appendChild(more);
+      }
+
+      // Tip
+      let tip = '';
+      const climateVal = parseFloat(document.querySelector('input[name="climate"]:checked').value);
+      const actVal = parseFloat(document.querySelector('input[name="activity"]:checked').value);
+      if (climateVal === 0.6 && actVal >= 1.25) {
+        tip = '🔆 You\'re in a hot climate AND highly active — hydration is critical for you. Carry a water bottle everywhere and drink before you feel thirsty.';
+      } else if (climateVal === 0.6) {
+        tip = '🌡️ Living in a hot climate means you lose water even at rest. Try to drink a glass of water every hour during the day.';
+      } else if (actVal >= 1.45) {
+        tip = '💪 With your high activity level, remember to drink water before, during, and after exercise — not just when you\'re thirsty.';
+      } else {
+        tip = '✅ A good tip: start your morning with a full glass of water before anything else. It kick-starts your hydration for the day.';
+      }
+      document.getElementById('resultTip').textContent = tip;
+
+      // Show results
+      const resultsCard = document.getElementById('resultsCard');
+      resultsCard.classList.add('visible');
+      resultsCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ===== RESET =====
+    function resetForm() {
+      document.getElementById('weightKg').value = '';
+      document.getElementById('weightLbs').value = '';
+      document.getElementById('resultsCard').classList.remove('visible');
+      document.querySelector('input[name="unit"][value="metric"]').checked = true;
+      document.querySelector('input[name="activity"][value="1.0"]').checked = true;
+      document.querySelector('input[name="climate"][value="0.3"]').checked = true;
+      document.getElementById('weightMetricGroup').style.display = 'block';
+      document.getElementById('weightImperialGroup').style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
